@@ -35,4 +35,12 @@ export default {
     text-align: center;
     padding: 20px 0;
   }
+  ul {
+    li {
+      display: block;
+      font-size: 20px;
+      padding: 20px 0;
+      text-align: center;
+    }
+  }
 </style>
