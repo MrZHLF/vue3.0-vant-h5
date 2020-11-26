@@ -1,18 +1,38 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>{{msg}}</h1>
+    <ul>
+      <li v-for="(item,index) in list" :key="index">
+        <p>{{item.name}}</p>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import { ref } from 'vue'
+import { getUser } from './../api/home'
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  setup () {
+    const msg = ref('vue3.0开发H5模板')
+    const list = ref([])
+    getUser().then((res) => {
+      console.log(res,'re');
+      list.value = res
+    })
+    return {
+      msg,
+      list
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  h1 {
+    display: block;
+    font-size: 38px;
+    text-align: center;
+    padding: 20px 0;
+  }
+</style>
