@@ -1,28 +1,38 @@
 <template>
   <div>
-    <h1>{{msg}}</h1>
+    <van-button type="danger" @click="handleBtn">vuex按钮</van-button>
+    <h1>{{name}}</h1>
+    <p>{{msg}}</p>
     <ul>
       <li v-for="(item,index) in list" :key="index">
-        <p>{{item.name}}</p>
+        <router-link :to="`/detail/${item.id}`">{{item.name}}</router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useStore } from 'vuex'
 import { getUser } from './../api/home'
 export default {
   setup () {
-    const msg = ref('vue3.0开发H5模板')
+    const msg = ref('vue3.0全家桶+vant+axios+rem')
     const list = ref([])
+    const store = useStore()
     getUser().then((res) => {
       console.log(res,'re');
       list.value = res
     })
+    const name = computed(() => store.state.userNmae)
+    const handleBtn = () =>{
+      store.commit('getUserNmae', 'Vue')
+    }
     return {
       msg,
-      list
+      list,
+      name,
+      handleBtn
     }
   }
 }

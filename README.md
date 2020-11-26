@@ -18,6 +18,7 @@
 
  ### 简介
  - 关注公众号: 回复 “加群”，即可加入前端交流群 或者搜索 ``` 攻程狮小周 ```
+ - 项目博客地址 ```https://blog.csdn.net/Govern66/article/details/110178890```
  <p>
   <img src="/src/assets/images/qrcode_for_gh_5ddc08b3a52c_344.jpg" width="256" style="display:inline;">
 </p>
@@ -45,6 +46,130 @@
   |———— vue.config.js    #vue常用配置项
   |———— package.json     #项目配置文件
   |———— README.md        #项目的说明文档，markdown 格式
+```
+### ✅ 路由 vue-router
+vue3.0和vue2.0路配置大差不差，但是在页面获取name,path,params,query需要单独处理一下
+
+```javascript
+  import { createRouter, createWebHistory } from 'vue-router'
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: () => import ('./../layout/index.vue'),
+    redirect: '/home',
+    meta: {
+      title: '首页',
+      keepAlive:false
+    },
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('@/views/Home.vue')
+      },
+      {
+        path: '/about',
+        name: 'About',
+        component: () => import('@/views/About.vue')
+      },
+      {
+        path: '/detail/:id',
+        name: 'Detail',
+        component: () => import('@/views/Detail.vue')
+      }
+    ]
+  }
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+
+export default router
+
+```
+#### 页面中获取params参数
+- useRoute 获取当前的路由信息，包含了当前 URL 解析得到的信息。包含当前的路径，参数，query对象等。
+- useRoute 是全局路由的实例，是router构造方法的实例。
+``` javascript
+  import { ref } from 'vue'
+  import { useRoute,useRoute } from 'vue-router'
+  export default {
+    setup () {
+      const route = useRoute() 
+      let currentId = ref(0)
+      currentId = route.params.id //路由跳转id
+      return {
+        currentId
+      }
+    }
+  }
+```
+
+### ✅ vuex状态管理
+- vuex用法差不大，只是使用的时候，需要引入一下
+
+`main.js` 引入
+
+```javascript
+import { createApp } from 'vue'
+import App from './App.vue'
+import store from './store'
+createApp(App).use(store).mount('#app')
+
+```
+
+store文件
+``` javascript
+import { createStore } from 'vuex'
+
+export default createStore({
+  state: {
+    userNmae: "vue3.0开发H5模板"
+  },
+  mutations: {
+    getUserNmae(state,data) {
+      state.userNmae = data
+    }
+  },
+  actions: {
+  },
+  modules: {
+  }
+})
+
+```
+
+使用
+```html
+<template>
+  <div>
+    <van-button type="danger" @click="handleBtn">vuex按钮</van-button>
+  </div>
+</template>
+<script>
+import { computed, ref } from 'vue'
+import { useStore } from 'vuex'
+import { getUser } from './../api/home'
+export default {
+  setup () {
+    const msg = ref('vue3.0全家桶+vant+axios+rem')
+    const store = useStore()
+    const name = computed(() => store.state.userNmae)
+    const handleBtn = () =>{
+      store.commit('getUserNmae', 'Vue')
+    }
+    return {
+      msg,
+      name,
+      handleBtn
+    }
+  }
+}
+</script>
+
 ```
 
 ### ✅ 配置多环境变量
@@ -119,6 +244,7 @@ console.log(baseApi)
 ```
 
 ### ✅ rem 适配方案 
+
 不用担心，项目已经配置好了 `rem` 适配, 下面仅做介绍：
 
 Vant 中的样式默认使用`px`作为单位，如果需要使用`rem`单位，推荐使用以下两个工具:
