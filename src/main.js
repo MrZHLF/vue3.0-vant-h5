@@ -10,7 +10,6 @@ import 'lib-flexible/flexible.js';
 import '@/assets/scss/index.scss';
 
 // 全局引入按需引入UI库 vant
-// import './plugins/vant.js';
 import { Button, Tabbar, TabbarItem   } from 'vant'
 
 createApp(App).use(store).use(router).use(Button).use(Tabbar).use(TabbarItem).mount('#app')
