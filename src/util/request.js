@@ -1,7 +1,9 @@
+/** 
+ *  @author 小周
+ * @description  接口封装
+*/ 
 import axios from 'axios'
 import { baseApi } from './../config'
-
-
 
 const service = axios.create({
   baseURL: baseApi,

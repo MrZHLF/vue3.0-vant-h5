@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped>
   h1 {
     display: block;
-    font-size: 38px;
+    font-size: 40px;
     text-align: center;
     padding: 20px 0;
   }
