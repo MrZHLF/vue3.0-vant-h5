@@ -2,7 +2,7 @@
   <div>
     <van-button type="danger" @click="handleBtn">vuex按钮</van-button>
     <h1>{{name}}</h1>
-    <p>{{msg}}</p>
+    <p>{{ msg }}</p>
     <ul>
       <li v-for="(item,index) in list" :key="index">
         <router-link :to="`/detail/${item.id}`">{{item.name}}</router-link>
